@@ -1,19 +1,17 @@
 # Logistics Robot Fleet
-
-![image](https://github.com/user-attachments/assets/53bc3ca7-ded4-4cff-9a44-69e6e6c7b088)
+  ![image](https://github.com/user-attachments/assets/53bc3ca7-ded4-4cff-9a44-69e6e6c7b088)
 
 ## Overview
 
-This repository hosts the ROS-based software for a logistics robot designed for autonomous navigation in indoor environments, such as warehouses or factories. The robot leverages a variety of sensors, including **RPLidar** for LiDAR-based mapping and obstacle detection, and **Intel RealSense** for depth sensing and visual navigation. 
+This repository hosts the ROS-based software for a logistics robot designed for autonomous navigation in indoor environments, such as warehouses or factories. The robot leverages a variety of sensors, including **RPLidar** for LiDAR-based mapping and obstacle detection, and **Intel RealSense T265** for localization. 
 
-In addition to sensor integration, the repository offers flexibility in motion planning with multiple global and local planning algorithms, allowing you to tailor the robot's navigation capabilities to your specific use case. These planning algorithms are made available through the integration of the [ros_motion_planning](https://github.com/ai-winter/ros_motion_planning) repository, providing advanced path planning and obstacle avoidance solutions.
+In addition to sensor integration, the repository offers flexibility in motion planning with multiple global and local planning algorithms, allowing you to tailor the robot's navigation capabilities to your specific use case. These planning algorithms are made available through the integration of the [ros_motion_planning](https://github.com/ai-winter/ros_motion_planning) repository, providing multiple advanced path planning algorithms and obstacle avoidance solutions.
 
 ## Features
 - **Lidar-based obstacle detection** using `RPLidar A1`.
-- **Sensor fusion** with `lrf_sensor_fusion` for enhanced perception.
-- **Multiple Path planning algorithms to try** via `teb_local_planner` and `ros_motion_planning`.
+- **Multiple Path planning algorithms to try** via  `ros_motion_planning`.
 - **Real-time control and data collection** using `lrf_control` and `lrf_data_collector`.
-- **Intel RealSense integration** for visual navigation (`realsense-ros`).
+- **Intel RealSense integration** for visual navigation and localization (`realsense-ros`).
 
 ## Repository Structure
 ```plaintext
