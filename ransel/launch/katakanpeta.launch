@@ -1,0 +1,21 @@
+<launch>
+    <!-- INITIALIZE BRINGUP -->
+    <include file="$(find ransel)/launch/bringup.launch" />
+
+    <!-- INITIALIZE LRF CONTROL-->
+    <node pkg="lrf_control" type="diff_drive_controller.py" name="mecanum_drive_controller" output="screen">
+    </node>
+
+	<!-- INITIALIZE ROSSERIAL PYTHON -->
+	<node name="serial_node" pkg="rosserial_python" type="serial_node.py">
+		<param name="port" value="/dev/ttyUSB1"/>
+		<param name="baud" value="57600"/>
+	</node>
+	
+	
+    <!-- Start SLAM Toolbox -->
+    <include file="$(find slam_toolbox)/online_async.launch"/>
+
+    <!--INITIALIZE RVIZ-->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ransel)/rviz/mapping.rviz" />
+</launch>

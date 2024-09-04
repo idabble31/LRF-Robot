@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<launch>
+    <!--include file="your_control_drive" /-->
+    <!--include file="your_lidar_drive" /-->
+    <!--node name="map_server" pkg="map_server" type="map_server" args="your_map" /-->
+
+    <!--Use tf package to perform coordinate system transformation, if neccessary-->
+    <!--node pkg="tf" type="" name="" args="" /-->
+
+    <!-- Initialize bringup -->
+    <include file="$(find ransel)/launch/bringup.launch" />
+
+    <!-- Map File -->
+    <arg name="map_file" default="$(find ransel)/maps/lab_smart_233.yaml"/>
+
+    <!-- INITIALIZE LRF CONTROL-->
+    <node pkg="lrf_control" type="diff_drive_controller.py" name="mecanum_drive_controller" output="screen">
+    </node>
+
+    <!-- INITIALIZE ROSSERIAL PYTHON -->
+    <node name="serial_node" pkg="rosserial_python" type="serial_node.py">
+      <param name="port" value="/dev/ttyUSB1"/>
+      <param name="baud" value="57600"/>
+    </node>
+
+    <!-- Map Server -->
+    <!-- Publish: /map, /map_metadata -->
+    <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" />
+
+    <!-- AMCL -->
+    <!-- <node pkg="amcl" type="amcl" name="amcl">
+        <rosparam file="$(find sim_env)/config/amcl_params.yaml" command="load" />
+        <param name="initial_pose_x" value="0.0" />
+        <param name="initial_pose_y" value="0.0" />
+        <param name="initial_pose_z" value="0.0" />
+        <remap from="static_map" to="/static_map" />
+    </node> -->
+
+    <!-- use als ros localization -->
+    <include file="$(find als_ros)/launch/mcl.launch" />
+
+    <!-- MoveBase-->
+    <include file="$(find sim_env)/launch/include/navigation/move_base.launch.xml">
+        <arg name="robot" value="turtlebot3_waffle" />
+        <arg name="global_planner" value="d_star" />
+        <arg name="local_planner" value="teb" />
+    </include>
+
+    <!-- Rviz-->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find sim_env)/rviz/sim_env.rviz" />
+</launch>
